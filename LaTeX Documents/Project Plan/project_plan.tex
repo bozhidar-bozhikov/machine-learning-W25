@@ -1,0 +1,110 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[11pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage{amsmath}
+
+% These packages are all incorporated in the memoir class to one degree or another...
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\title{Binary Image Classification: Cats vs. Dogs with Data Augmentation and Early Stopping}
+\author{Bozhidar Bozhikov, Nikita Smolianinov, Vedran Andric, Egor Chebotarev, Islam Elikhanov}
+%\date{} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+\begin{document}
+\maketitle
+
+\section{Dataset}
+
+We've opted to use the Cats vs. Dogs dataset on $kaggle$, containing roughly 25.000 labeled images of cats and dogs, divided evenly. The dataset is appropriate because it has images of varying sizes, real world photos with realistic lighting, backgrounds, poses and color. 
+
+Images will be resized to a singular resolution (e.g. 224x224 pixels) and normalized. The data split between training, validation and testing will be a standard 70/15/15 split. The data augmentation applied may include random rotation of $\pm$15°, image flipping, zooming, brightness/sharpness/saturation etc.
+
+\section{Model Design}
+
+We decided we would use a Convolutional Neural Network (CNN) built from scratch as our architecture. It will have an input layer that accepts RGB images of size 224x224x3, 3 convolutional blocks with a flatten layer (with ReLu activation), a fully-connected layer and a SoftMax function for the binary classification itself. 
+
+If time permits we would also like to compare the "traditional" CNN to an alternative model: a Vision Transformer (ViT) adapted for binary classification. The ViT shall split the input images into 16x16 patches and process them using self-attention mechanisms. To achieve this, we could use a pre-trained ViT (e.g. ViT-Base). 
+
+\section{Input/Output}
+
+The input shall be RGB images of PNG or JPG format. The images shall be preprocessed and normalized by the program. 
+
+The output shall consist of binary classification - Cat or Dog - with an attached confidence score $[P(cat), P(dog)]$. For example:\\
+
+Input: image.png (224x224x3 tensor)\\
+Output: Predicted class "Cat" with a confidence of 0.87 given [0.87, 0.13]
+
+\section{Workflow Distribution}
+
+\subsection{Data Preparation and Augmentation (Nikita Smolianinov)}
+
+Smolianinov shall download and organize the kaggle cats/dogs dataset, segment the data in the afformentioned 70/15/15 split, create the data preprocessing pipeline (resize and normalize), implement the data augmentation functions and generate and document the dataset statistics. 
+
+\subsection{Model Design (Bozhidar Bozhikov)}
+
+Bozhikov shall design the CNN architecture from scratch, implement the convolutional layers, pooling layers and fully-connected layers in PyTorch, design the appropriate filter size, number and layer depth and calculate and document the parameter count.
+If time permits: implement the ViT for comparison, document and discuss the comparison.
+
+\subsection{Training (Egor Chebotarev)}
+
+Chebotarev shall implement the training loop in PyTorch, set up a loss function and optimizer, implement the early stopping functionality using model checkpointing to save the best weights based on validation accuracy to prevent overfitting, track training/validation loss and accuracy per epoch and generate training curves and visualization during testing.
+
+\subsection{Evaluation (Vedran Andric)}
+
+Andric shall implement comprehensive evaluation metrics (Accuracy, Precision, Specificity and overall F1 score), generate the confusion matrix on the test set, graph ROC curve and AUC score, conduct error analysis on misclassified images and test final model on test set and document results. 
+
+\subsection{Deployment (Islam Elikhanov)}
+
+Elikhanov shall develop an interactive web app using Gradio or similar, display predictions with confidence scores and visualizations, create a user friendly interface with clear instructions, prepare final project documentation and presentation if missing and record a demonstration video.
+
+\end{document}
