@@ -1,0 +1,15 @@
+# gitignore for the 25k dataset images and the resulting datasets
+PetImages/
+data/
+
+# also ignore cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# also ignore model checkpoints
+*.pth
+*.pt
+*.ckpt
