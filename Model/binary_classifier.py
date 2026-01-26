@@ -31,7 +31,7 @@ class BinaryImageClassifier(nn.Module):
         self.input_channels = input_channels
         self.input_size = input_size
 
-        self.features == nn.Sequential(
+        self.features = nn.Sequential(
             #OrderedDict[
             nn.Conv2d(input_channels, 32, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
