@@ -174,9 +174,7 @@ def main():
     DOGS_DIR = "PetImages/Dog"
     OUTPUT_DIR = "data/cats_vs_dogs_split"
     
-    print("=" * 60)
     print("Cats vs Dogs Dataset Preparation")
-    print("=" * 60)
     
     print("\nStep 1: Splitting dataset into train/val/test...")
     split_dataset(
@@ -204,9 +202,7 @@ def main():
     print(f"  Image range: [{images.min():.3f}, {images.max():.3f}]")
     print(f"  Label values: {labels.unique().tolist()}")
     
-    print("\n" + "=" * 60)
     print("Data preparation complete!")
-    print("=" * 60)
 
 
 if __name__ == "__main__":

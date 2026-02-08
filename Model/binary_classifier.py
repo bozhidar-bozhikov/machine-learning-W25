@@ -36,14 +36,17 @@ class BinaryImageClassifier(nn.Module):
             nn.Conv2d(input_channels, 32, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2), #block 1
+            nn.Dropout2d(0, 0.25), #dropout layers for conv layers
             
             nn.Conv2d(32, 64, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2), #block 2
+            nn.Dropout2d(0, 0.25),
             
             nn.Conv2d(64, 128, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2) # block 3
+            nn.MaxPool2d(kernel_size=2, stride=2), # block 3
+            nn.Dropout2d(0, 0.25),
         )
 
         map_size = input_size // 8
@@ -51,9 +54,14 @@ class BinaryImageClassifier(nn.Module):
         self.classifier = nn.Sequential(
             nn.Flatten(),
             nn.Linear(flattened_size, 256),
-            nn.ReLU(inplace=True),
+            nn.ReLU(),
+            nn.Dropout(0.5),  #dropout for fully connected layers
+            
+            nn.Linear(256, 128),
+            nn.ReLU(),
             nn.Dropout(0.5),
-            nn.Linear(256, 1),
+            
+            nn.Linear(128, 1),
             nn.Sigmoid()
         )
 
