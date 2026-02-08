@@ -1,0 +1,43 @@
+BATCH_SIZE = 64
+EPOCHS = 20
+LR = 0.001
+WEIGHT_DECAY = 0.0001
+ES_PATIENCE = 5
+LR_PATIENCE = 3
+LR_FACTOR = 0.5
+PyTorch version: 2.5.1+cu121
+Using device: cuda
+Epoch [1/20] Train Loss: 0.6785 Train Acc: 0.5721 Val Loss: 0.6509 Val Acc: 0.6288 Learning rate: 0.001000
+Saved best model for run20 with val acc: 0.6288
+Epoch [2/20] Train Loss: 0.5981 Train Acc: 0.6825 Val Loss: 0.5693 Val Acc: 0.7120 Learning rate: 0.001000
+Saved best model for run20 with val acc: 0.7120
+Epoch [3/20] Train Loss: 0.5180 Train Acc: 0.7464 Val Loss: 0.4791 Val Acc: 0.7747 Learning rate: 0.001000
+Saved best model for run20 with val acc: 0.7747
+Epoch [4/20] Train Loss: 0.4513 Train Acc: 0.7916 Val Loss: 0.4706 Val Acc: 0.7824 Learning rate: 0.001000
+Saved best model for run20 with val acc: 0.7824
+Epoch [5/20] Train Loss: 0.4073 Train Acc: 0.8206 Val Loss: 0.4466 Val Acc: 0.7928 Learning rate: 0.001000
+Saved best model for run20 with val acc: 0.7928
+Epoch [6/20] Train Loss: 0.3528 Train Acc: 0.8476 Val Loss: 0.4418 Val Acc: 0.7976 Learning rate: 0.001000
+Saved best model for run20 with val acc: 0.7976
+Epoch [7/20] Train Loss: 0.2942 Train Acc: 0.8783 Val Loss: 0.4541 Val Acc: 0.8019 Learning rate: 0.001000
+Saved best model for run20 with val acc: 0.8019
+Epoch [8/20] Train Loss: 0.2376 Train Acc: 0.9058 Val Loss: 0.5896 Val Acc: 0.7813 Learning rate: 0.001000
+No improvement. Early stopping patience: 1/5
+Epoch [9/20] Train Loss: 0.1932 Train Acc: 0.9249 Val Loss: 0.5374 Val Acc: 0.7915 Learning rate: 0.001000
+No improvement. Early stopping patience: 2/5
+Epoch [10/20] Train Loss: 0.1498 Train Acc: 0.9433 Val Loss: 0.6121 Val Acc: 0.8069 Learning rate: 0.001000
+Saved best model for run20 with val acc: 0.8069
+Epoch [11/20] Train Loss: 0.1347 Train Acc: 0.9492 Val Loss: 0.7018 Val Acc: 0.7928 Learning rate: 0.001000
+No improvement. Early stopping patience: 1/5
+Epoch [12/20] Train Loss: 0.1069 Train Acc: 0.9605 Val Loss: 0.6438 Val Acc: 0.7867 Learning rate: 0.001000
+No improvement. Early stopping patience: 2/5
+Epoch [13/20] Train Loss: 0.0974 Train Acc: 0.9653 Val Loss: 0.7602 Val Acc: 0.7947 Learning rate: 0.001000
+No improvement. Early stopping patience: 3/5
+Epoch [14/20] Train Loss: 0.0877 Train Acc: 0.9681 Val Loss: 0.7990 Val Acc: 0.7872 Learning rate: 0.001000
+Learning rate reduced: 0.001000 → 0.000500
+No improvement. Early stopping patience: 4/5
+Epoch [15/20] Train Loss: 0.0629 Train Acc: 0.9773 Val Loss: 0.8091 Val Acc: 0.7952 Learning rate: 0.000500
+No improvement. Early stopping patience: 5/5
+Early stopping triggered at epoch 15
+Training finished
+Best Val Acc for this run: 0.8069

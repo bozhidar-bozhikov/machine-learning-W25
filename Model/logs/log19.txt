@@ -1,0 +1,31 @@
+BATCH_SIZE = 32
+EPOCHS = 10
+LR = 0.001
+WEIGHT_DECAY = 0.0001
+ES_PATIENCE = 5
+LR_PATIENCE = 3
+LR_FACTOR = 0.5
+PyTorch version: 2.5.1+cu121
+Using device: cuda
+Epoch [1/10] Train Loss: 0.6911 Train Acc: 0.5343 Val Loss: 0.6927 Val Acc: 0.5672 Learning rate: 0.001000
+Saved best model for run19 with val acc: 0.5672
+Epoch [2/10] Train Loss: 0.6672 Train Acc: 0.5974 Val Loss: 0.6338 Val Acc: 0.6472 Learning rate: 0.001000
+Saved best model for run19 with val acc: 0.6472
+Epoch [3/10] Train Loss: 0.6111 Train Acc: 0.6762 Val Loss: 0.5940 Val Acc: 0.6709 Learning rate: 0.001000
+Saved best model for run19 with val acc: 0.6709
+Epoch [4/10] Train Loss: 0.5617 Train Acc: 0.7215 Val Loss: 0.5519 Val Acc: 0.7157 Learning rate: 0.001000
+Saved best model for run19 with val acc: 0.7157
+Epoch [5/10] Train Loss: 0.5091 Train Acc: 0.7548 Val Loss: 0.5173 Val Acc: 0.7413 Learning rate: 0.001000
+Saved best model for run19 with val acc: 0.7413
+Epoch [6/10] Train Loss: 0.4566 Train Acc: 0.7881 Val Loss: 0.5165 Val Acc: 0.7453 Learning rate: 0.001000
+Saved best model for run19 with val acc: 0.7453
+Epoch [7/10] Train Loss: 0.4029 Train Acc: 0.8195 Val Loss: 0.5331 Val Acc: 0.7589 Learning rate: 0.001000
+Saved best model for run19 with val acc: 0.7589
+Epoch [8/10] Train Loss: 0.3476 Train Acc: 0.8499 Val Loss: 0.5021 Val Acc: 0.7643 Learning rate: 0.001000
+Saved best model for run19 with val acc: 0.7643
+Epoch [9/10] Train Loss: 0.2972 Train Acc: 0.8748 Val Loss: 0.5470 Val Acc: 0.7536 Learning rate: 0.001000
+No improvement. Early stopping patience: 1/5
+Epoch [10/10] Train Loss: 0.2575 Train Acc: 0.8962 Val Loss: 0.5944 Val Acc: 0.7608 Learning rate: 0.001000
+No improvement. Early stopping patience: 2/5
+Training finished
+Best Val Acc for this run: 0.7643
