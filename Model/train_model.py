@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torchvision import datasets, transforms
 
 from binary_classifier import BinaryImageClassifier
@@ -19,7 +20,9 @@ EPOCHS = 10
 LR = 1e-3
 INPUT_SIZE = 224
 WEIGHT_DECAY = 1e-4 #L2 regularization
-PATIENCE = 5  #early stopping
+ES_PATIENCE = 5  #early stopping
+LR_PATIENCE = 3  #LR scheduler if no improvement for N epochs
+LR_FACTOR = 0.5  #multiply LR by N when reducing
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 RUNS_DIR = os.path.join(BASE_DIR, "saved_runs")
@@ -47,7 +50,9 @@ log_print(f"BATCH_SIZE = {BATCH_SIZE}")
 log_print(f"EPOCHS = {EPOCHS}")
 log_print(f"LR = {LR}")
 log_print(f"WEIGHT_DECAY = {WEIGHT_DECAY}")
-log_print(f"PATIENCE = {PATIENCE}")
+log_print(f"ES_PATIENCE = {ES_PATIENCE}")
+log_print(f"LR_PATIENCE = {LR_PATIENCE}")
+log_print(f"LR_FACTOR = {LR_FACTOR}")
 log_print(f"PyTorch version: {torch.__version__}")
 log_print(f"Using device: {DEVICE}")
 
@@ -73,7 +78,14 @@ model = BinaryImageClassifier(input_channels=3, input_size=INPUT_SIZE).to(DEVICE
 criterion = nn.BCELoss()
 #optimizer = optim.Adam(model.parameters(), lr=LR)
 optimizer = optim.Adam(model.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
-
+#learning rate scheduler
+scheduler = ReduceLROnPlateau(
+    optimizer, 
+    mode='max',  #for validation accuracy
+    factor=LR_FACTOR,  #multiply LR by this factor
+    patience=LR_PATIENCE,  #wait this many epochs before reducing
+    verbose=False
+)
 
 # Training Loop
 
@@ -130,11 +142,20 @@ for epoch in range(EPOCHS):
     val_loss = val_loss / len(val_dataset)
     val_acc = val_corrects.double() / len(val_dataset)
 
+    current_lr = optimizer.param_groups[0]['lr']
+
     log_print(
         f"Epoch [{epoch+1}/{EPOCHS}] "
         f"Train Loss: {epoch_loss:.4f} Train Acc: {epoch_acc:.4f} "
         f"Val Loss: {val_loss:.4f} Val Acc: {val_acc:.4f}"
+        f"Learning rate: {current_lr:.6f}"
     )
+
+    old_lr = current_lr
+    scheduler.step(val_acc) #update lr based on val acc
+    new_lr = optimizer.param_groups[0]['lr']
+    if new_lr < old_lr:
+        log_print(f"Learning rate reduced: {old_lr:.6f} -> {new_lr:.6f}")
 
     # Save best model for this run
 
@@ -149,7 +170,7 @@ for epoch in range(EPOCHS):
         log_print(f"Saved best model for run{run_number} with val acc: {best_val_acc:.4f}")
     else:
         patience_counter += 1
-        log_print(f"No improvement. Patience: {patience_counter}/{PATIENCE}")
+        log_print(f"No improvement. Patience: {patience_counter}/{ES_PATIENCE}")
         
         if patience_counter >= PATIENCE:
             log_print(f"Early stopping triggered at epoch {epoch+1}")
@@ -158,3 +179,11 @@ for epoch in range(EPOCHS):
 log_print("Training finished")
 log_print(f"Best Val Acc for this run: {best_val_acc:.4f}")
 
+try:
+    epochs, train_losses, train_accs, val_losses, val_accs, hyperparams = parse_log_file(log_path)
+    loss_plot, acc_plot = create_plots(
+        epochs, train_losses, train_accs, val_losses, val_accs,
+        run_number, hyperparams, PLOTS_DIR
+    )
+except Exception as e:
+    print(f"Error generating plots: {e}")

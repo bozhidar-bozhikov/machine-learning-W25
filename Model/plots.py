@@ -22,6 +22,10 @@ def parse_log_file(filepath):
     batch_size_match = re.search(r'BATCH_SIZE\s*=\s*(\d+)', content)
     epochs_match = re.search(r'EPOCHS\s*=\s*(\d+)', content)
     lr_match = re.search(r'LR\s*=\s*([\d.e\-+]+)', content)
+    weight_decay_match = re.search(r'WEIGHT_DECAY\s*=\s*([\d.e\-+]+)', content)
+    es_patience_match = re.search(r'ES_PATIENCE\s*=\s*(\d+)', content)
+    lr_patience_match = re.search(r'LR_PATIENCE\s*=\s*(\d+)', content)
+    lr_factor_match = re.search(r'LR_FACTOR\s*=\s*([\d.]+)', content)
     
     if batch_size_match:
         hyperparams['batch_size'] = int(batch_size_match.group(1))
@@ -29,6 +33,14 @@ def parse_log_file(filepath):
         hyperparams['epochs'] = int(epochs_match.group(1))
     if lr_match:
         hyperparams['lr'] = lr_match.group(1)
+    if weight_decay_match:
+        hyperparams['weight_decay'] = weight_decay_match.group(1)
+    if es_patience_match:
+        hyperparams['es_patience'] = int(es_patience_match.group(1))
+    if lr_patience_match:
+        hyperparams['lr_patience'] = int(lr_patience_match.group(1))
+    if lr_factor_match:
+        hyperparams['lr_factor'] = float(lr_factor_match.group(1))
     
     #regex the epoch data
     pattern = r'Epoch \[(\d+)/\d+\] Train Loss: ([\d.]+) Train Acc: ([\d.]+) Val Loss: ([\d.]+) Val Acc: ([\d.]+)'
@@ -60,6 +72,15 @@ def create_plots(epochs, train_losses, train_accs, val_losses, val_accs,
         hyperparam_text.append(f"Epochs: {hyperparams['epochs']}")
     if 'lr' in hyperparams:
         hyperparam_text.append(f"LR: {hyperparams['lr']}")
+    if 'weight_decay' in hyperparams:
+        hyperparam_text.append(f"Weight Decay: {hyperparams['weight_decay']}")
+    if 'es_patience' in hyperparams:
+        hyperparam_text.append(f"ES Patience: {hyperparams['es_patience']}")
+    if 'lr_patience' in hyperparams:
+        hyperparam_text.append(f"LR Patience: {hyperparams['lr_patience']}")
+    if 'lr_factor' in hyperparams:
+        hyperparam_text.append(f"LR Factor: {hyperparams['lr_factor']}")
+    
     hyperparam_str = '\n'.join(hyperparam_text)
     
     #plot 1 - loss curves
