@@ -1,0 +1,41 @@
+BATCH_SIZE = 32
+EPOCHS = 20
+LR = 1e-3
+PyTorch version: 2.5.1+cu121
+torchvision version: 0.20.1+cu121
+Using device: cuda
+/home/veki/Documents/machine-learning-W25/model/torch-env/lib/python3.12/site-packages/PIL/TiffImagePlugin.py:949: UserWarning: Truncated File Read
+  warnings.warn(str(msg))
+Epoch [1/20] Train Loss: 0.6941 Train Acc: 0.5428 Val Loss: 0.6829 Val Acc: 0.5760
+Saved best model for run12 with val acc: 0.5760
+Epoch [2/20] Train Loss: 0.6719 Train Acc: 0.5878 Val Loss: 0.6669 Val Acc: 0.5893
+Saved best model for run12 with val acc: 0.5893
+Epoch [3/20] Train Loss: 0.6595 Train Acc: 0.6060 Val Loss: 0.6602 Val Acc: 0.5968
+Saved best model for run12 with val acc: 0.5968
+Epoch [4/20] Train Loss: 0.6276 Train Acc: 0.6481 Val Loss: 0.6054 Val Acc: 0.6685
+Saved best model for run12 with val acc: 0.6685
+Epoch [5/20] Train Loss: 0.5641 Train Acc: 0.7117 Val Loss: 0.5529 Val Acc: 0.7176
+Saved best model for run12 with val acc: 0.7176
+Epoch [6/20] Train Loss: 0.4937 Train Acc: 0.7619 Val Loss: 0.5308 Val Acc: 0.7416
+Saved best model for run12 with val acc: 0.7416
+Epoch [7/20] Train Loss: 0.4302 Train Acc: 0.7998 Val Loss: 0.5071 Val Acc: 0.7523
+Saved best model for run12 with val acc: 0.7523
+Epoch [8/20] Train Loss: 0.3627 Train Acc: 0.8374 Val Loss: 0.5234 Val Acc: 0.7592
+Saved best model for run12 with val acc: 0.7592
+Epoch [9/20] Train Loss: 0.2847 Train Acc: 0.8773 Val Loss: 0.5768 Val Acc: 0.7547
+Epoch [10/20] Train Loss: 0.2199 Train Acc: 0.9136 Val Loss: 0.6579 Val Acc: 0.7611
+Saved best model for run12 with val acc: 0.7611
+Epoch [11/20] Train Loss: 0.1614 Train Acc: 0.9383 Val Loss: 0.6973 Val Acc: 0.7613
+Saved best model for run12 with val acc: 0.7613
+Epoch [12/20] Train Loss: 0.1216 Train Acc: 0.9555 Val Loss: 0.9891 Val Acc: 0.7592
+Epoch [13/20] Train Loss: 0.1038 Train Acc: 0.9627 Val Loss: 1.0658 Val Acc: 0.7565
+Epoch [14/20] Train Loss: 0.0944 Train Acc: 0.9663 Val Loss: 1.2705 Val Acc: 0.7547
+Epoch [15/20] Train Loss: 0.0821 Train Acc: 0.9725 Val Loss: 1.3816 Val Acc: 0.7592
+Epoch [16/20] Train Loss: 0.0733 Train Acc: 0.9763 Val Loss: 1.2602 Val Acc: 0.7605
+Epoch [17/20] Train Loss: 0.0633 Train Acc: 0.9795 Val Loss: 1.6215 Val Acc: 0.7533
+Epoch [18/20] Train Loss: 0.0620 Train Acc: 0.9807 Val Loss: 1.3096 Val Acc: 0.7504
+Epoch [19/20] Train Loss: 0.0543 Train Acc: 0.9834 Val Loss: 1.8506 Val Acc: 0.7651
+Saved best model for run12 with val acc: 0.7651
+Epoch [20/20] Train Loss: 0.0507 Train Acc: 0.9850 Val Loss: 1.6717 Val Acc: 0.7613
+Training finished
+Best Val Acc for this run: 0.7651

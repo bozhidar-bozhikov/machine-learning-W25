@@ -1,0 +1,28 @@
+Next training:
+BATCH_SIZE = 8
+EPOCHS = 10
+LR = 1e-3
+PyTorch version: 2.5.1+cu121
+torchvision version: 0.20.1+cu121
+Using device: cuda
+/home/veki/Documents/machine-learning-W25/model/torch-env/lib/python3.12/site-packages/PIL/TiffImagePlugin.py:949: UserWarning: Truncated File Read
+  warnings.warn(str(msg))
+Epoch [1/10] Train Loss: 0.6889 Train Acc: 0.5523 Val Loss: 0.6637 Val Acc: 0.6003
+Saved best model for run8 with val acc: 0.6003
+Epoch [2/10] Train Loss: 0.6525 Train Acc: 0.6246 Val Loss: 0.6278 Val Acc: 0.6472
+Saved best model for run8 with val acc: 0.6472
+Epoch [3/10] Train Loss: 0.6102 Train Acc: 0.6704 Val Loss: 0.5957 Val Acc: 0.6880
+Saved best model for run8 with val acc: 0.6880
+Epoch [4/10] Train Loss: 0.5461 Train Acc: 0.7268 Val Loss: 0.5516 Val Acc: 0.7160
+Saved best model for run8 with val acc: 0.7160
+Epoch [5/10] Train Loss: 0.4907 Train Acc: 0.7661 Val Loss: 0.5316 Val Acc: 0.7355
+Saved best model for run8 with val acc: 0.7355
+Epoch [6/10] Train Loss: 0.4325 Train Acc: 0.8029 Val Loss: 0.5343 Val Acc: 0.7336
+Epoch [7/10] Train Loss: 0.3660 Train Acc: 0.8362 Val Loss: 0.5722 Val Acc: 0.7363
+Saved best model for run8 with val acc: 0.7363
+Epoch [8/10] Train Loss: 0.3089 Train Acc: 0.8664 Val Loss: 0.5944 Val Acc: 0.7357
+Epoch [9/10] Train Loss: 0.2418 Train Acc: 0.8992 Val Loss: 0.7006 Val Acc: 0.7429
+Saved best model for run8 with val acc: 0.7429
+Epoch [10/10] Train Loss: 0.2059 Train Acc: 0.9178 Val Loss: 0.9967 Val Acc: 0.7331
+Training finished
+Best Val Acc for this run: 0.7429
