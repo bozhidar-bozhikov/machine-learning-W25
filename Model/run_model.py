@@ -101,7 +101,7 @@ def main():
     transform = get_transform()
 
     model = BinaryImageClassifier(input_channels=3, input_size=INPUT_SIZE).to(device)
-    model.load_state_dict(torch.load(weights_path, map_location=device))
+    model.load_state_dict(torch.load(weights_path, map_location=device, weights_only=True))
     model.eval()
 
     image_paths = collect_image_paths(arguments.image_or_folder)
