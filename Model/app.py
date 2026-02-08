@@ -1,9 +1,3 @@
-"""
-Gradio web app: upload one image, get cat/dog prediction and confidence.
-Switch between v1 (original) and v2 (updated) model via dropdown.
-Run: python app.py
-Then open the URL shown (e.g. http://127.0.0.1:7860).
-"""
 import os
 
 import gradio as gr
@@ -16,9 +10,8 @@ from binary_classifier import BinaryImageClassifier, BinaryImageClassifierV2
 
 INPUT_SIZE = 224
 
-# Paths to .pth files (v1 = original architecture, v2 = updated architecture)
-WEIGHTS_PATH_V1 = "/Users/acaerme/Desktop/best_run.pth"
-WEIGHTS_PATH_V2 = "/Users/acaerme/Desktop/run22.pth"
+WEIGHTS_PATH_V1 = "placeholder" # path to the .pth file with weights for the original architecture
+WEIGHTS_PATH_V2 = "placeholder" # path to the .pth file with weights for the updated architecture
 
 MODEL_CHOICES = ["v1 (original)", "v2 (updated)"]
 
@@ -49,7 +42,6 @@ def load_model_v2(weights_path: str, device):
 
 
 def predict(model_choice, image):
-    """Run selected model on uploaded image. Returns string: 'class confidence' e.g. 'dog 0.87'."""
     if image is None:
         return "Upload an image to get a prediction."
     device = predict.device
