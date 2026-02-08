@@ -18,6 +18,7 @@ BATCH_SIZE = 32
 EPOCHS = 10
 LR = 1e-3
 INPUT_SIZE = 224
+WEIGHT_DECAY = 1e-4 #L2 regularization
 PATIENCE = 5  #early stopping
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -45,6 +46,8 @@ def log_print(message):
 log_print(f"BATCH_SIZE = {BATCH_SIZE}")
 log_print(f"EPOCHS = {EPOCHS}")
 log_print(f"LR = {LR}")
+log_print(f"WEIGHT_DECAY = {WEIGHT_DECAY}")
+log_print(f"PATIENCE = {PATIENCE}")
 log_print(f"PyTorch version: {torch.__version__}")
 log_print(f"Using device: {DEVICE}")
 
@@ -69,7 +72,7 @@ val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False)
 model = BinaryImageClassifier(input_channels=3, input_size=INPUT_SIZE).to(DEVICE)
 criterion = nn.BCELoss()
 #optimizer = optim.Adam(model.parameters(), lr=LR)
-optimizer = optim.Adam(model.parameters(), lr=LR, weight_decay=1e-4)
+optimizer = optim.Adam(model.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
 
 
 # Training Loop
