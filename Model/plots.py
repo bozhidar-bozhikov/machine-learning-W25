@@ -14,19 +14,10 @@ def clear_plots_folder(plots_dir=LOGS_PATH):
     print(f"Cleared and created '{plots_dir}/' directory")
 
 def parse_log_file(filepath):
-    """
-    Parse training log file and extract epoch data and hyperparameters.
-    
-    Args:
-        filepath: Path to the text file containing training logs
-        
-    Returns:
-        Tuple of (epochs, train_losses, train_accs, val_losses, val_accs, hyperparams)
-    """
     with open(filepath, 'r') as f:
         content = f.read()
     
-    # Extract hyperparameters
+    #extract hyperparameters
     hyperparams = {}
     batch_size_match = re.search(r'BATCH_SIZE\s*=\s*(\d+)', content)
     epochs_match = re.search(r'EPOCHS\s*=\s*(\d+)', content)
@@ -39,11 +30,11 @@ def parse_log_file(filepath):
     if lr_match:
         hyperparams['lr'] = lr_match.group(1)
     
-    # Extract epoch data using regex
+    #regex the epoch data
     pattern = r'Epoch \[(\d+)/\d+\] Train Loss: ([\d.]+) Train Acc: ([\d.]+) Val Loss: ([\d.]+) Val Acc: ([\d.]+)'
     matches = re.findall(pattern, content)
     
-    # Parse data into lists
+    #parse thev data into lists
     epochs = []
     train_losses = []
     train_accs = []
