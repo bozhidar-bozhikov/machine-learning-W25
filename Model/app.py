@@ -1,5 +1,6 @@
 """
 Gradio web app: upload one image, get cat/dog prediction and confidence.
+Switch between v1 (original) and v2 (updated) model via dropdown.
 Run: python app.py
 Then open the URL shown (e.g. http://127.0.0.1:7860).
 """
@@ -10,13 +11,16 @@ import torch
 from PIL import Image
 from torchvision import transforms
 
-from binary_classifier import BinaryImageClassifier
+from binary_classifier import BinaryImageClassifier, BinaryImageClassifierV2
 
 
 INPUT_SIZE = 224
 
-# Change this path to your best_run.pth (or other .pth with BinaryImageClassifier weights)
-WEIGHTS_PATH = "/Users/acaerme/Desktop/best_run.pth"
+# Paths to .pth files (v1 = original architecture, v2 = updated architecture)
+WEIGHTS_PATH_V1 = "/Users/acaerme/Desktop/best_run.pth"
+WEIGHTS_PATH_V2 = "/Users/acaerme/Desktop/run22.pth"
+
+MODEL_CHOICES = ["v1 (original)", "v2 (updated)"]
 
 
 def get_device():
@@ -30,20 +34,28 @@ def get_transform():
     ])
 
 
-def load_model(weights_path: str, device):
+def load_model_v1(weights_path: str, device):
     model = BinaryImageClassifier(input_channels=3, input_size=INPUT_SIZE).to(device)
     model.load_state_dict(torch.load(weights_path, map_location=device))
     model.eval()
     return model
 
 
-def predict(image):
-    """Run model on uploaded image. Returns string: 'class confidence' e.g. 'dog 0.87'."""
+def load_model_v2(weights_path: str, device):
+    model = BinaryImageClassifierV2(input_channels=3, input_size=INPUT_SIZE).to(device)
+    model.load_state_dict(torch.load(weights_path, map_location=device))
+    model.eval()
+    return model
+
+
+def predict(model_choice, image):
+    """Run selected model on uploaded image. Returns string: 'class confidence' e.g. 'dog 0.87'."""
     if image is None:
         return "Upload an image to get a prediction."
     device = predict.device
     transform = predict.transform
-    model = predict.model
+    models = predict.models
+    model = models[model_choice]
     image_pil = Image.open(image).convert("RGB")
     tensor = transform(image_pil).unsqueeze(0).to(device)
     with torch.no_grad():
@@ -54,26 +66,35 @@ def predict(image):
 
 
 def main():
-    if not os.path.isfile(WEIGHTS_PATH):
+    if not os.path.isfile(WEIGHTS_PATH_V1):
         raise FileNotFoundError(
-            f"Weights file not found: {WEIGHTS_PATH}. "
-            "Edit WEIGHTS_PATH at the top of app.py to point to your .pth file."
+            f"v1 weights file not found: {WEIGHTS_PATH_V1}. "
+            "Edit WEIGHTS_PATH_V1 at the top of app.py."
+        )
+    if not os.path.isfile(WEIGHTS_PATH_V2):
+        raise FileNotFoundError(
+            f"v2 weights file not found: {WEIGHTS_PATH_V2}. "
+            "Edit WEIGHTS_PATH_V2 at the top of app.py."
         )
     device = get_device()
     transform = get_transform()
-    model = load_model(WEIGHTS_PATH, device)
+    model_v1 = load_model_v1(WEIGHTS_PATH_V1, device)
+    model_v2 = load_model_v2(WEIGHTS_PATH_V2, device)
     predict.device = device
     predict.transform = transform
-    predict.model = model
+    predict.models = {choice: model for choice, model in zip(MODEL_CHOICES, [model_v1, model_v2])}
 
     interface = gr.Interface(
         fn=predict,
-        inputs=gr.Image(type="filepath", label="Upload image"),
+        inputs=[
+            gr.Dropdown(choices=MODEL_CHOICES, value=MODEL_CHOICES[0], label="Model"),
+            gr.Image(type="filepath", label="Upload image"),
+        ],
         outputs=gr.Textbox(label="Prediction"),
         title="Cat / Dog classifier",
-        description="Upload a single image. The model predicts cat or dog and confidence.",
+        description="Choose a model (v1 or v2), then upload an image. The model predicts cat or dog and confidence.",
     )
-    interface.launch(share=True)
+    interface.launch()
 
 
 if __name__ == "__main__":
