@@ -147,16 +147,9 @@ for epoch in range(EPOCHS):
         f"Epoch [{epoch+1}/{EPOCHS}] "
         f"Train Loss: {epoch_loss:.4f} Train Acc: {epoch_acc:.4f} "
         f"Val Loss: {val_loss:.4f} Val Acc: {val_acc:.4f} "
-        f"Learning rate: {current_lr:.6f}"
+        f"Learning rate: {current_lr:.6f} "
+        f"ES Patience: {patience_counter}/{ES_PATIENCE}"
     )
-
-    #lr scheduling
-    old_lr = current_lr
-    scheduler.step(val_acc)
-    new_lr = scheduler.get_last_lr()[0]
-
-    if new_lr < old_lr:
-        log_print(f"Learning rate reduced: {old_lr:.6f} → {new_lr:.6f}")
 
     # Save best model for this run
 
@@ -176,6 +169,14 @@ for epoch in range(EPOCHS):
         if patience_counter >= ES_PATIENCE:
             log_print(f"Early stopping triggered at epoch {epoch+1}")
             break
+
+    #lr scheduling
+    old_lr = current_lr
+    scheduler.step(val_acc)
+    new_lr = scheduler.get_last_lr()[0]
+
+    if new_lr < old_lr:
+        log_print(f"Learning rate reduced: {old_lr:.6f} → {new_lr:.6f}")
 
 log_print("Training finished")
 log_print(f"Best Val Acc for this run: {best_val_acc:.4f}")
