@@ -83,8 +83,7 @@ scheduler = ReduceLROnPlateau(
     optimizer, 
     mode='max',  #for validation accuracy
     factor=LR_FACTOR,  #multiply LR by this factor
-    patience=LR_PATIENCE,  #wait this many epochs before reducing
-    verbose=False
+    patience=LR_PATIENCE  #wait this many epochs before reducing
 )
 
 # Training Loop
@@ -147,15 +146,17 @@ for epoch in range(EPOCHS):
     log_print(
         f"Epoch [{epoch+1}/{EPOCHS}] "
         f"Train Loss: {epoch_loss:.4f} Train Acc: {epoch_acc:.4f} "
-        f"Val Loss: {val_loss:.4f} Val Acc: {val_acc:.4f}"
+        f"Val Loss: {val_loss:.4f} Val Acc: {val_acc:.4f} "
         f"Learning rate: {current_lr:.6f}"
     )
 
+    #lr scheduling
     old_lr = current_lr
-    scheduler.step(val_acc) #update lr based on val acc
-    new_lr = optimizer.param_groups[0]['lr']
+    scheduler.step(val_acc)
+    new_lr = scheduler.get_last_lr()[0]
+
     if new_lr < old_lr:
-        log_print(f"Learning rate reduced: {old_lr:.6f} -> {new_lr:.6f}")
+        log_print(f"Learning rate reduced: {old_lr:.6f} → {new_lr:.6f}")
 
     # Save best model for this run
 
@@ -170,9 +171,9 @@ for epoch in range(EPOCHS):
         log_print(f"Saved best model for run{run_number} with val acc: {best_val_acc:.4f}")
     else:
         patience_counter += 1
-        log_print(f"No improvement. Patience: {patience_counter}/{ES_PATIENCE}")
+        log_print(f"No improvement. Early stopping patience: {patience_counter}/{ES_PATIENCE}")
         
-        if patience_counter >= PATIENCE:
+        if patience_counter >= ES_PATIENCE:
             log_print(f"Early stopping triggered at epoch {epoch+1}")
             break
 
