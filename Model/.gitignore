@@ -2,6 +2,11 @@
 PetImages/
 data/
 
+# virtual environments
+venv/
+.venv/
+env/
+
 # also ignore cache
 __pycache__/
 *.pyc
